@@ -150,6 +150,12 @@ app.post('/api/actions/borrow', (req, res) => {
     res.json({ message: 'Game borrowed' });
 });
 
+app.post('/api/actions/return', (req, res) => {
+    const { game_id } = req.body;
+    jsonDb.update('boardgames', game_id, { status: 'available' }, 'game_id');
+    res.json({ message: 'Game returned' });
+});
+
 app.get('/api/actions/payment-summary/:visit_id', (req, res) => {
     const { visit_id } = req.params;
     const visit = jsonDb.getById('visits', visit_id, 'visit_id');
@@ -181,7 +187,7 @@ app.get('/api/actions/payment-summary/:visit_id', (req, res) => {
 app.get('/api/seed', (req, res) => {
     if (jsonDb.getAll('customers').length === 0) {
         jsonDb.create('customers', { customer_id: 1, name: 'John Doe', phone: '0812345678', register_date: '2024-05-01', password: 'password123' });
-        jsonDb.create('staff', { staff_id: 1, staff_name: 'Wichai', position: 'Manager', password: 'admin' });
+        jsonDb.create('staff', { staff_id: 1, staff_name: 'sirapop', position: 'Manager', password: 'admin' });
         jsonDb.create('cats', { cat_id: 1, cat_name: 'Mochi', breed: 'British Shorthair', staff_id: 1 });
         jsonDb.create('menu', { menu_id: 1, menu_name: 'Matcha Latte', price: 85, category: 'Drink' });
         jsonDb.create('menu', { menu_id: 2, menu_name: 'Cat Cookie', price: 45, category: 'Food' });

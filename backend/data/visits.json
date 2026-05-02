@@ -30,5 +30,29 @@
     "check_in": "2024-05-02T16:20:00.000Z",
     "check_out": null,
     "service_fee": 50
+  },
+  {
+    "visit_id": 1777739108050,
+    "customer_id": 1777739108039,
+    "staff_id": 1,
+    "check_in": "2026-05-02T16:25:08.050Z",
+    "check_out": null,
+    "service_fee": 50
+  },
+  {
+    "visit_id": 1777740825358,
+    "customer_id": 1777740301926,
+    "staff_id": "2",
+    "check_in": "2026-05-02T16:53:45.358Z",
+    "check_out": null,
+    "service_fee": 50
+  },
+  {
+    "visit_id": 1777742183645,
+    "customer_id": 1777740301926,
+    "staff_id": 1,
+    "check_in": "2026-05-02T17:16:23.645Z",
+    "check_out": null,
+    "service_fee": 50
   }
 ]

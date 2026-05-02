@@ -26,5 +26,19 @@
     "phone": "0819998888",
     "register_date": "2024-05-04",
     "password": "password123"
+  },
+  {
+    "customer_id": 1777739108039,
+    "name": "TestUser",
+    "phone": "0999999999",
+    "register_date": "2026-05-02",
+    "password": "testpassword"
+  },
+  {
+    "customer_id": 1777740301926,
+    "name": "golf",
+    "phone": "0000000008",
+    "register_date": "2026-05-02",
+    "password": "17112548"
   }
 ]

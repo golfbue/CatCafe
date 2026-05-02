@@ -1,4 +1,3 @@
-
 // --- ROUTER & STATE ---
 const API = window.location.origin + '/api';
 let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
@@ -98,7 +97,7 @@ async function loadPage(pageId) {
                 name: document.getElementById('reg-name').value,
                 phone: document.getElementById('reg-phone').value,
                 password: document.getElementById('reg-pass').value,
-                role: document.getElementById('reg-role').value
+                role: 'customer'
             };
 
             try {
@@ -129,8 +128,6 @@ async function loadPage(pageId) {
             updateSidebar();
             
             if (currentUser.role === 'customer') {
-                document.getElementById('ci-customer-name').innerText = name;
-                loadDropdowns();
                 loadPage('home');
             } else {
                 loadPage('dashboard');
@@ -157,7 +154,6 @@ async function loadPage(pageId) {
             if (currentUser.role === 'customer') {
                 sidebar.innerHTML = `
                     <div class="nav-item active" onclick="loadPage('home')">🏠 หน้าหลัก</div>
-                    <div class="nav-item" onclick="loadPage('checkin')">🕒 เช็คอิน (Check-in)</div>
                     <div class="nav-item" onclick="loadPage('orders')">🍔 เมนูและสั่งอาหาร</div>
                     <div class="nav-item" onclick="loadPage('games')">🎲 บอร์ดเกม</div>
                     <div class="nav-item" onclick="loadPage('payment')">💳 ชำระเงิน</div>
@@ -185,18 +181,27 @@ async function loadPage(pageId) {
         async function doCheckin() {
             if(!currentUser || currentUser.role !== 'customer') return;
             
+            const staff = await (await fetch(`${API}/staff`)).json();
+            const staff_id = staff.length ? staff[0].staff_id : null;
+            if (!staff_id) throw new Error('ไม่พบพนักงานสำหรับเช็คอิน');
+
             const data = {
                 customer_id: currentUser.user.customer_id,
-                staff_id: document.getElementById('ci-staff').value
+                staff_id
             };
             const res = await fetch(`${API}/actions/checkin`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(data)
             });
+            if (!res.ok) throw new Error('ไม่สามารถเช็คอินได้');
             currentVisit = await res.json();
-            alert('เช็คอินสำเร็จ! รหัสการเข้าใช้บริการของคุณคือ: ' + currentVisit.visit_id);
-            loadPage('orders');
+            localStorage.setItem('currentVisit', JSON.stringify(currentVisit));
+        }
+
+        async function ensureVisit() {
+            if (currentVisit) return;
+            await doCheckin();
         }
 
         async function loadMenu() {
@@ -232,15 +237,17 @@ async function loadPage(pageId) {
         }
 
         async function placeOrder() {
-            if(!currentVisit) return alert('กรุณาเช็คอินก่อนสั่งอาหารครับ!');
             if(cart.length === 0) return alert('ตะกร้าสินค้าของคุณยังว่างเปล่า!');
+            if(!currentVisit) {
+                await ensureVisit();
+            }
             
             await fetch(`${API}/actions/order`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ visit_id: currentVisit.visit_id, items: cart.map(i => ({ menu_id: i.menu_id, quantity: 1 })) })
             });
-            alert('สั่งอาหารสำเร็จ!');
+            alert('สั่งอาหารสำเร็จ! ขณะนี้คุณได้เข้าใช้บริการเรียบร้อยแล้ว');
             cart = [];
             renderCart();
         }
@@ -252,19 +259,33 @@ async function loadPage(pageId) {
                 <div class="card">
                     <h3>${i.game_name}</h3>
                     <p>${i.category} | สถานะ: ${i.status === 'available' ? 'ว่าง' : 'ถูกยืม'}</p>
-                    ${i.status === 'available' ? `<button class="btn btn-s" onclick="borrowGame(${i.game_id})" style="margin-top: 1rem;">ยืมเกมนี้</button>` : '<p style="color:#ef4444; margin-top:1rem;">ถูกยืมไปแล้ว</p>'}
+                    ${i.status === 'available' 
+                        ? `<button class="btn btn-s" onclick="borrowGame(${i.game_id})" style="margin-top: 1rem;">ยืมเกมนี้</button>` 
+                        : `<button class="btn btn-danger" onclick="returnGame(${i.game_id})" style="margin-top: 1rem; padding: 0.5rem 1rem;">คืนเกมนี้</button>`}
                 </div>
             `).join('');
         }
 
         async function borrowGame(id) {
-            if(!currentVisit) return alert('กรุณาเช็คอินก่อนยืมบอร์ดเกมครับ!');
+            if(!currentVisit) {
+                await ensureVisit();
+            }
             await fetch(`${API}/actions/borrow`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({ visit_id: currentVisit.visit_id, game_id: id })
             });
-            alert('ยืมบอร์ดเกมสำเร็จ!');
+            alert('ยืมบอร์ดเกมสำเร็จ! ขณะนี้คุณได้เข้าใช้บริการเรียบร้อยแล้ว');
+            loadGames();
+        }
+
+        async function returnGame(id) {
+            await fetch(`${API}/actions/return`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ game_id: id })
+            });
+            alert('คืนบอร์ดเกมสำเร็จ!');
             loadGames();
         }
 
@@ -310,11 +331,16 @@ async function loadPage(pageId) {
 
         async function openManage(collection) {
             currentManageCollection = collection;
+            
+            // Ensure the manage page is loaded into the DOM
+            await loadPage('manage');
+
+            // Hide other pages (loadPage already does this, but just to be sure)
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('s-manage').classList.add('active');
+            document.getElementById('page-manage').classList.add('active');
             
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(n => n.getAttribute('onclick').includes(collection));
+            const activeNav = Array.from(document.querySelectorAll('.nav-item')).find(n => n.getAttribute('onclick') && n.getAttribute('onclick').includes(collection));
             if(activeNav) activeNav.classList.add('active');
 
             const titleMap = { 'customers': 'จัดการลูกค้า', 'staff': 'จัดการพนักงาน', 'cats': 'จัดการข้อมูลแมว', 'menu': 'จัดการเมนูอาหาร', 'boardgames': 'จัดการบอร์ดเกม', 'orders': 'จัดการออเดอร์' };
@@ -322,7 +348,7 @@ async function loadPage(pageId) {
             
             const addBtn = document.getElementById('add-new-btn');
             if (addBtn) {
-                if (['orders', 'customers', 'staff'].includes(collection)) {
+                if (['orders', 'customers'].includes(collection)) {
                     addBtn.style.display = 'none';
                 } else {
                     addBtn.style.display = 'block';
@@ -340,6 +366,7 @@ async function loadPage(pageId) {
                     <tr>
                         ${keys.map(k => `<td>${item[k]}</td>`).join('')}
                         <td>
+                            ${collection === 'boardgames' && item.status !== 'available' ? `<button onclick="returnGame(${item.game_id}); setTimeout(()=>openManage('boardgames'), 500);" style="color:#10b981; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">คืนเกม (Return)</button>` : ''}
                             <button onclick="viewDetails('${collection}', '${item[keys[0]]}')" style="color:var(--accent); background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">รายละเอียด</button>
                             <button onclick="deleteItem('${collection}', '${item[keys[0]]}')" style="color:#ef4444; background:none; border:none; cursor:pointer; font-weight:bold;">ลบ (Delete)</button>
                         </td>
@@ -422,6 +449,11 @@ async function loadPage(pageId) {
 
         function showAddModal() {
             const fieldsMap = {
+                'staff': [
+                    { name: 'staff_name', label: 'ชื่อพนักงาน', type: 'text' },
+                    { name: 'position', label: 'ตำแหน่ง (เช่น Admin, Manager)', type: 'text' },
+                    { name: 'password', label: 'รหัสผ่าน', type: 'password' }
+                ],
                 'cats': [
                     { name: 'cat_name', label: 'ชื่อแมว', type: 'text' },
                     { name: 'breed', label: 'สายพันธุ์', type: 'text' },
@@ -462,6 +494,7 @@ async function loadPage(pageId) {
         async function submitAddForm(e) {
             e.preventDefault();
             const fieldsMap = {
+                'staff': ['staff_name', 'position', 'password'],
                 'cats': ['cat_name', 'breed', 'staff_id'],
                 'menu': ['menu_name', 'price', 'category'],
                 'boardgames': ['game_name', 'category', 'status']
