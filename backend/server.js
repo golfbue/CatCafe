@@ -184,6 +184,19 @@ app.get('/api/actions/payment-summary/:visit_id', (req, res) => {
     res.json({ items, foodTotal, serviceFee, grandTotal });
 });
 
+app.post('/api/actions/checkout', (req, res) => {
+    const { visit_id } = req.body;
+    const visit = jsonDb.getById('visits', visit_id, 'visit_id');
+    if (!visit) {
+        return res.status(404).json({ message: 'ไม่พบการเข้าใช้บริการ' });
+    }
+    const updatedVisit = jsonDb.update('visits', visit_id, {
+        check_out: new Date().toISOString(),
+        status: 'checked_out'
+    }, 'visit_id');
+    res.json({ message: 'เช็คเอาท์เรียบร้อย', visit: updatedVisit });
+});
+
 app.get('/api/seed', (req, res) => {
     if (jsonDb.getAll('customers').length === 0) {
         jsonDb.create('customers', { customer_id: 1, name: 'John Doe', phone: '0812345678', register_date: '2024-05-01', password: 'password123' });

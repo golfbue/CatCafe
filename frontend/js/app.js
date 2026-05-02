@@ -307,11 +307,21 @@ async function loadPage(pageId) {
 
         async function finishPayment() {
             if(!currentVisit) return alert('ไม่มีรายการให้ชำระเงิน');
-            alert('ชำระเงินสำเร็จ! ขอบคุณที่มาใช้บริการ CatCafe ของเราครับ');
-            
-            // Mark checkout in backend
-            // For now, just reset the local state
+
+            const res = await fetch(`${API}/actions/checkout`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ visit_id: currentVisit.visit_id })
+            });
+
+            if (!res.ok) {
+                const error = await res.json();
+                return alert('ไม่สามารถเช็คเอาท์ได้: ' + (error.message || 'เกิดข้อผิดพลาด'));
+            }
+
+            alert('ชำระเงินสำเร็จ! คุณได้รับการเช็คเอาท์เรียบร้อยแล้ว');
             currentVisit = null;
+            localStorage.removeItem('currentVisit');
             loadPage('home');
         }
 
