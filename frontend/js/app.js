@@ -4,6 +4,8 @@ let currentUser = JSON.parse(localStorage.getItem('currentUser')) || null;
 let currentVisit = JSON.parse(localStorage.getItem('currentVisit')) || null;
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 let currentManageCollection = '';
+let isEditMode = false;
+let editingItemId = null;
 
 async function loadPage(pageId) {
     const main = document.getElementById('main-content');
@@ -377,6 +379,7 @@ async function loadPage(pageId) {
                         ${keys.map(k => `<td>${item[k]}</td>`).join('')}
                         <td>
                             ${collection === 'boardgames' && item.status !== 'available' ? `<button onclick="returnGame(${item.game_id}); setTimeout(()=>openManage('boardgames'), 500);" style="color:#10b981; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">คืนเกม (Return)</button>` : ''}
+                            ${['staff', 'cats', 'menu', 'boardgames'].includes(collection) ? `<button onclick="showEditModal('${collection}', '${item[keys[0]]}')" style="color:#3b82f6; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">แก้ไข</button>` : ''}
                             <button onclick="viewDetails('${collection}', '${item[keys[0]]}')" style="color:var(--accent); background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">รายละเอียด</button>
                             <button onclick="deleteItem('${collection}', '${item[keys[0]]}')" style="color:#ef4444; background:none; border:none; cursor:pointer; font-weight:bold;">ลบ (Delete)</button>
                         </td>
@@ -458,6 +461,20 @@ async function loadPage(pageId) {
         }
 
         function showAddModal() {
+            isEditMode = false;
+            editingItemId = null;
+            renderManageForm();
+        }
+
+        async function showEditModal(collection, id) {
+            isEditMode = true;
+            currentManageCollection = collection;
+            editingItemId = id;
+            const data = await (await fetch(`${API}/${collection}/${id}`)).json();
+            renderManageForm(data);
+        }
+
+        function renderManageForm(values = {}) {
             const fieldsMap = {
                 'staff': [
                     { name: 'staff_name', label: 'ชื่อพนักงาน', type: 'text' },
@@ -483,21 +500,22 @@ async function loadPage(pageId) {
 
             const fields = fieldsMap[currentManageCollection];
             if (!fields) {
-                alert('ยังไม่รองรับการเพิ่มข้อมูลในส่วนนี้ผ่านหน้าเว็บโดยตรง');
+                alert('ยังไม่รองรับการจัดการข้อมูลในส่วนนี้ผ่านหน้าเว็บโดยตรง');
                 return;
             }
 
             const html = fields.map(f => {
+                const value = values[f.name] !== undefined && values[f.name] !== null ? values[f.name] : '';
                 if (f.type === 'select') {
                     return `<div class="form-group"><label>${f.label}</label>
-                            <select id="add_${f.name}" required>${f.options.map(o => `<option value="${o}">${o}</option>`).join('')}</select></div>`;
+                            <select id="add_${f.name}" required>${f.options.map(o => `<option value="${o}" ${o === value ? 'selected' : ''}>${o}</option>`).join('')}</select></div>`;
                 }
                 return `<div class="form-group"><label>${f.label}</label>
-                        <input type="${f.type}" id="add_${f.name}" required></div>`;
+                        <input type="${f.type}" id="add_${f.name}" value="${value}" required></div>`;
             }).join('');
 
             document.getElementById('add-form-fields').innerHTML = html;
-            document.getElementById('add-modal-title').innerText = 'เพิ่ม ' + document.getElementById('manage-title').innerText.replace('จัดการ', '');
+            document.getElementById('add-modal-title').innerText = isEditMode ? 'แก้ไข ' + document.getElementById('manage-title').innerText.replace('จัดการ', '') : 'เพิ่ม ' + document.getElementById('manage-title').innerText.replace('จัดการ', '');
             document.getElementById('add-modal').classList.add('active');
         }
 
@@ -517,16 +535,19 @@ async function loadPage(pageId) {
             });
 
             try {
-                await fetch(`${API}/${currentManageCollection}`, {
-                    method: 'POST',
+                await fetch(`${API}/${currentManageCollection}${isEditMode ? '/' + editingItemId : ''}`, {
+                    method: isEditMode ? 'PUT' : 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(data)
                 });
-                alert('เพิ่มข้อมูลสำเร็จ!');
+                alert(isEditMode ? 'แก้ไขข้อมูลสำเร็จ!' : 'เพิ่มข้อมูลสำเร็จ!');
                 document.getElementById('add-modal').classList.remove('active');
                 openManage(currentManageCollection);
             } catch (err) {
                 alert('เกิดข้อผิดพลาด: ' + err.message);
+            } finally {
+                isEditMode = false;
+                editingItemId = null;
             }
         }
 
