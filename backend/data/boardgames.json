@@ -1,0 +1,32 @@
+[
+  {
+    "game_id": 1,
+    "game_name": "Catan",
+    "category": "Strategy",
+    "status": "available"
+  },
+  {
+    "game_id": 2,
+    "game_name": "Splendor",
+    "category": "Strategy",
+    "status": "available"
+  },
+  {
+    "game_id": 3,
+    "game_name": "Uno",
+    "category": "Party",
+    "status": "borrowed"
+  },
+  {
+    "game_id": 4,
+    "game_name": "Exploding Kittens",
+    "category": "Party",
+    "status": "available"
+  },
+  {
+    "game_id": 5,
+    "game_name": "Ticket to Ride",
+    "category": "Strategy",
+    "status": "available"
+  }
+]

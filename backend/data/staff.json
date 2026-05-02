@@ -1,0 +1,26 @@
+[
+  {
+    "staff_id": 1,
+    "staff_name": "Wichai",
+    "position": "Manager",
+    "password": "admin"
+  },
+  {
+    "staff_id": 2,
+    "staff_name": "Somsri",
+    "position": "Barista",
+    "password": "admin"
+  },
+  {
+    "staff_id": 3,
+    "staff_name": "Nattapong",
+    "position": "Cat Caretaker",
+    "password": "admin"
+  },
+  {
+    "staff_id": 1777736330336,
+    "staff_name": "golfbue",
+    "position": "Staff",
+    "password": "17112548"
+  }
+]

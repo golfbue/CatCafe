@@ -1,0 +1,30 @@
+[
+  {
+    "customer_id": 1,
+    "name": "John Doe",
+    "phone": "0812345678",
+    "register_date": "2024-05-01",
+    "password": "password123"
+  },
+  {
+    "customer_id": 2,
+    "name": "Somchai Jaidee",
+    "phone": "0891112222",
+    "register_date": "2024-05-02",
+    "password": "password123"
+  },
+  {
+    "customer_id": 3,
+    "name": "Manee Srisuk",
+    "phone": "0883334444",
+    "register_date": "2024-05-03",
+    "password": "password123"
+  },
+  {
+    "customer_id": 4,
+    "name": "Nadech Kugimiya",
+    "phone": "0819998888",
+    "register_date": "2024-05-04",
+    "password": "password123"
+  }
+]

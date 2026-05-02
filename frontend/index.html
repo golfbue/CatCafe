@@ -3,61 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NekoCafe - Customer</title>
-    <link rel="stylesheet" href="style.css">
+    <title>CatCafe Pro | ระบบจัดการร้าน</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar Menu -->
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <h2>NekoCafe</h2>
-                <span class="text-muted">Customer Portal</span>
-            </div>
-            <ul class="nav-menu">
-                <li><a href="index.html" class="active">🏠 หน้าแรก (Home)</a></li>
-                <li><a href="menu.html">☕ สั่งเครื่องดื่ม (Menu)</a></li>
-                <li><a href="cats.html">🐈 ดูน้องแมว (Cats)</a></li>
-                <li><a href="games.html">🎲 บอร์ดเกม (Games)</a></li>
-                <li style="margin-top: 40px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
-                    <a href="admin.html">⚙️ ไปหน้า Admin</a>
-                </li>
-            </ul>
+    <nav>
+        <div class="logo">CatCafe Pro</div>
+        <div class="auth-controls" id="auth-controls" style="display: none;">
+            <span class="user-info" id="nav-user-info">ยินดีต้อนรับ, ผู้ใช้</span>
+            <button class="btn btn-danger" style="padding: 0.5rem 1rem;" onclick="logout()">ออกจากระบบ</button>
+        </div>
+    </nav>
+
+    <div class="container" id="app-container">
+        <aside id="sidebar">
+            <!-- Sidebar content injected by JS -->
         </aside>
 
-        <!-- Main Content -->
-        <main class="main-content">
-            <h1>ยินดีต้อนรับสู่ NekoCafe!</h1>
-            <p class="text-muted" style="margin-bottom: 30px;">คาเฟ่แมวและบอร์ดเกมที่คุณสามารถพักผ่อนได้อย่างเต็มที่</p>
+        <main id="main-content">
+            <!-- Pages will be dynamically loaded here by app.js -->
 
-            <div class="grid-cards">
-                <div class="card">
-                    <h3>🐈 เล่นกับแมว</h3>
-                    <p class="text-muted">บันทึกประวัติการเล่นกับน้องแมวแต่ละตัวในร้าน</p>
-                    <a href="cats.html" class="btn btn-primary mt-2">ดูรายชื่อน้องแมว</a>
-                </div>
-                
-                <div class="card">
-                    <h3>☕ สั่งเครื่องดื่ม</h3>
-                    <p class="text-muted">ดูเมนูอาหาร เครื่องดื่ม และทำการสั่งซื้อที่โต๊ะ</p>
-                    <a href="menu.html" class="btn btn-primary mt-2">ดูเมนู</a>
-                </div>
-
-                <div class="card">
-                    <h3>🎲 ยืมบอร์ดเกม</h3>
-                    <p class="text-muted">มีบอร์ดเกมให้เลือกยืมเล่นฟรีมากกว่า 50 เกม</p>
-                    <a href="games.html" class="btn btn-primary mt-2">ดูบอร์ดเกม</a>
+            <!-- Info Modal -->
+            <div id="info-modal" class="modal">
+                <div class="modal-content" style="width: 500px;">
+                    <h2 id="info-modal-title" style="margin-bottom: 1rem; color: var(--accent); font-family: 'Playfair Display', serif;">รายละเอียด</h2>
+                    <div id="info-modal-body" style="margin-bottom: 1.5rem; max-height: 400px; overflow-y: auto;"></div>
+                    <div style="display: flex; gap: 1rem;">
+                        <button class="btn btn-p" style="flex: 1;" onclick="document.getElementById('info-modal').classList.remove('active')">ปิด</button>
+                        <button id="info-modal-delete-btn" class="btn btn-danger" style="flex: 1; display: none;">ลบข้อมูลนี้</button>
+                    </div>
                 </div>
             </div>
 
-            <div class="card mt-2">
-                <h3>ทดสอบดึงข้อมูลลูกค้าจาก Backend (Neo4j)</h3>
-                <button class="btn btn-primary" onclick="fetchCustomers()">คลิกเพื่อโหลดข้อมูล</button>
-                <ul id="customer-list" style="margin-top: 15px; padding-left: 20px;"></ul>
+            <!-- Add Modal -->
+            <div id="add-modal" class="modal">
+                <div class="modal-content" style="width: 500px;">
+                    <h2 id="add-modal-title" style="margin-bottom: 1rem; color: var(--accent); font-family: 'Playfair Display', serif;">เพิ่มข้อมูล</h2>
+                    <form id="add-form" onsubmit="submitAddForm(event)">
+                        <div id="add-form-fields" style="max-height: 400px; overflow-y: auto; margin-bottom: 1rem; padding-right: 0.5rem;"></div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button type="submit" class="btn btn-p" style="flex: 1;">บันทึก</button>
+                            <button type="button" class="btn btn-danger" style="flex: 1;" onclick="document.getElementById('add-modal').classList.remove('active')">ยกเลิก</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </main>
     </div>
 
-    <script src="app.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

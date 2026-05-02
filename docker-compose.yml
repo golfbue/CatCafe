@@ -1,23 +1,31 @@
 version: '3.8'
 
 services:
+  backend:
+    build: ./backend
+    container_name: catcafe-backend
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./backend/data:/app/data
+    environment:
+      - PORT=5000
+    depends_on:
+      - neo4j
+
   neo4j:
     image: neo4j:5.15.0
     container_name: catcafe-neo4j
     ports:
-      - "7474:7474" # HTTP
-      - "7687:7687" # Bolt
+      - "7474:7474" # HTTP (UI)
+      - "7687:7687" # Bolt (Driver)
     environment:
       - NEO4J_AUTH=neo4j/catcafe2024
       - NEO4J_PLUGINS=["apoc"]
     volumes:
       - neo4j_data:/data
       - neo4j_logs:/logs
-      - neo4j_import:/var/lib/neo4j/import
-      - neo4j_plugins:/plugins
 
 volumes:
   neo4j_data:
   neo4j_logs:
-  neo4j_import:
-  neo4j_plugins:

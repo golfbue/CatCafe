@@ -1,0 +1,32 @@
+[
+  {
+    "cat_id": 1,
+    "cat_name": "Mochi",
+    "breed": "British Shorthair",
+    "staff_id": 3
+  },
+  {
+    "cat_id": 2,
+    "cat_name": "Latte",
+    "breed": "Scottish Fold",
+    "staff_id": 3
+  },
+  {
+    "cat_id": 3,
+    "cat_name": "Kuro",
+    "breed": "Bombay",
+    "staff_id": 1
+  },
+  {
+    "cat_id": 4,
+    "cat_name": "Shiro",
+    "breed": "Khao Manee",
+    "staff_id": 2
+  },
+  {
+    "cat_id": 5,
+    "cat_name": "Garfield",
+    "breed": "Persian",
+    "staff_id": 3
+  }
+]

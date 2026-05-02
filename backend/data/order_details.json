@@ -1,0 +1,38 @@
+[
+  {
+    "order_detail_id": 9001,
+    "order_id": 5001,
+    "menu_id": 1,
+    "quantity": 2
+  },
+  {
+    "order_detail_id": 9002,
+    "order_id": 5001,
+    "menu_id": 2,
+    "quantity": 1
+  },
+  {
+    "order_detail_id": 9003,
+    "order_id": 5002,
+    "menu_id": 3,
+    "quantity": 1
+  },
+  {
+    "order_detail_id": 9004,
+    "order_id": 5003,
+    "menu_id": 4,
+    "quantity": 2
+  },
+  {
+    "order_detail_id": 9005,
+    "order_id": 5003,
+    "menu_id": 6,
+    "quantity": 1
+  },
+  {
+    "order_detail_id": 9006,
+    "order_id": 5004,
+    "menu_id": 5,
+    "quantity": 1
+  }
+]

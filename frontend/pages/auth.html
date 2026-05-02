@@ -1,0 +1,46 @@
+<div id="auth-modal" class="modal active">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 1rem; text-align: center; color: var(--accent); font-family: 'Playfair Display', serif;">ระบบจัดการ CatCafe</h2>
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="setAuthTab('login')">เข้าสู่ระบบ</div>
+                <div class="auth-tab" onclick="setAuthTab('register')">สมัครสมาชิก</div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="login-form" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label>ชื่อผู้ใช้งาน หรือ เบอร์โทรศัพท์</label>
+                    <input type="text" id="login-id" required placeholder="เช่น John Doe หรือ 0812345678">
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน</label>
+                    <input type="password" id="login-pass" required>
+                </div>
+                <button type="submit" class="btn btn-p" style="width: 100%;">เข้าสู่ระบบ</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="register-form" onsubmit="handleRegister(event)" style="display: none;">
+                <div class="form-group">
+                    <label>ชื่อ-นามสกุล</label>
+                    <input type="text" id="reg-name" required>
+                </div>
+                <div class="form-group">
+                    <label>เบอร์โทรศัพท์ (เฉพาะลูกค้า)</label>
+                    <input type="text" id="reg-phone">
+                </div>
+                <div class="form-group">
+                    <label>รหัสผ่าน</label>
+                    <input type="password" id="reg-pass" required>
+                </div>
+                <div class="form-group">
+                    <label>สิทธิ์การใช้งาน</label>
+                    <select id="reg-role">
+                        <option value="customer">ลูกค้า (Customer)</option>
+                        <option value="staff">พนักงาน (Staff)</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-s" style="width: 100%;">สร้างบัญชีผู้ใช้</button>
+            </form>
+        </div>
+    </div>

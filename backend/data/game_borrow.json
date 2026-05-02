@@ -1,0 +1,16 @@
+[
+  {
+    "borrow_id": 7001,
+    "visit_id": 1001,
+    "game_id": 1,
+    "borrow_time": "2024-05-02T10:30:00.000Z",
+    "return_time": "2024-05-02T11:45:00.000Z"
+  },
+  {
+    "borrow_id": 7002,
+    "visit_id": 1002,
+    "game_id": 3,
+    "borrow_time": "2024-05-02T12:00:00.000Z",
+    "return_time": null
+  }
+]

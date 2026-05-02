@@ -1,0 +1,171 @@
+:root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #22d3ee;
+            --success: #10b981;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+        /* Navigation Bar */
+        nav {
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #334155;
+        }
+
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--accent); }
+
+        .auth-controls { display: flex; align-items: center; gap: 1rem; }
+        .user-info { font-weight: 600; color: var(--accent); }
+
+        /* Layout */
+        .container { display: none; min-height: calc(100vh - 70px); }
+        .container.active { display: flex; }
+
+        aside {
+            width: 240px;
+            background: var(--card-bg);
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            padding: 0.8rem 1rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: 0.2s;
+        }
+
+        .nav-item:hover, .nav-item.active { background: #334155; color: var(--accent); }
+
+        main { flex: 1; padding: 2.5rem; }
+
+        /* Pages */
+        .page { display: none; animation: fadeIn 0.4s ease; }
+        .page.active { display: block; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Components */
+        .card { background: var(--card-bg); border-radius: 1rem; padding: 2rem; border: 1px solid #334155; margin-bottom: 1.5rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+
+        h1 { font-family: 'Playfair Display', serif; font-size: 2.5rem; margin-bottom: 1rem; }
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .stat-card { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 1.5rem; border-radius: 1rem; text-align: center; }
+        .stat-card h3 { font-size: 0.9rem; opacity: 0.8; }
+        .stat-card p { font-size: 2rem; font-weight: 700; }
+
+        .btn { padding: 0.8rem 1.5rem; border-radius: 0.6rem; border: none; cursor: pointer; font-weight: 600; transition: 0.2s; }
+        .btn-p { background: var(--primary); color: white; }
+        .btn-s { background: var(--accent); color: var(--bg); }
+        .btn-danger { background: #ef4444; color: white; }
+
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th { text-align: left; color: var(--text-muted); padding: 1rem; border-bottom: 1px solid #334155; }
+        td { padding: 1rem; border-bottom: 1px solid #334155; }
+
+        #graph-container { height: 600px; background: #0f172a; border-radius: 1rem; border: 1px solid #334155; }
+
+        .menu-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem; background: #334155; border-radius: 0.5rem; margin-bottom: 0.5rem; }
+
+        /* Auth Modal */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(5px);
+            justify-content: center; align-items: center; z-index: 2000;
+        }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--card-bg); padding: 2rem; border-radius: 1rem; width: 400px; border: 1px solid #334155; }
+        .form-group { margin-bottom: 1rem; }
+        .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); }
+        .form-group input, .form-group select {
+            width: 100%; padding: 0.8rem; border-radius: 0.5rem; border: 1px solid #334155; background: #0f172a; color: white; outline: none;
+        }
+        .form-group input:focus { border-color: var(--primary); }
+        .auth-tabs { display: flex; margin-bottom: 1.5rem; border-bottom: 1px solid #334155; }
+        .auth-tab { flex: 1; text-align: center; padding: 0.5rem; cursor: pointer; color: var(--text-muted); }
+        .auth-tab.active { color: var(--accent); border-bottom: 2px solid var(--accent); }
+
+        /* --- RESPONSIVE DESIGN (MOBILE) --- */
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 1rem;
+                text-align: center;
+            }
+            
+            .auth-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .container.active {
+                flex-direction: column;
+            }
+            
+            aside {
+                width: 100%;
+                padding: 1rem;
+                flex-direction: row;
+                overflow-x: auto;
+                white-space: nowrap;
+                border-bottom: 1px solid #334155;
+            }
+            
+            .nav-item {
+                flex: 0 0 auto;
+                text-align: center;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .card {
+                padding: 1.2rem;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+            
+            .modal-content {
+                width: 90%;
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
