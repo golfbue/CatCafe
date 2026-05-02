@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NekoCafe - Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Menu -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>NekoCafe</h2>
+                <span class="text-muted">Admin System</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="admin.html" class="active">📊 แดชบอร์ด (Dashboard)</a></li>
+                <li><a href="manage-cats.html">🐈 จัดการแมว</a></li>
+                <li><a href="manage-orders.html">☕ จัดการออเดอร์</a></li>
+                <li style="margin-top: 40px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+                    <a href="index.html">⬅️ กลับหน้า Customer</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1>ระบบจัดการหลังร้าน (Admin Dashboard)</h1>
+            <p class="text-muted" style="margin-bottom: 30px;">สรุปข้อมูลการขายและจัดการข้อมูลในร้าน</p>
+
+            <div class="grid-cards">
+                <div class="card">
+                    <h3>ยอดขายวันนี้</h3>
+                    <h1 style="color: var(--primary); font-size: 2.5rem; margin: 10px 0;">฿1,250</h1>
+                </div>
+                
+                <div class="card">
+                    <h3>ลูกค้ารายใหม่</h3>
+                    <h1 style="color: var(--secondary); font-size: 2.5rem; margin: 10px 0;">12 คน</h1>
+                </div>
+            </div>
+
+            <div class="card mt-2">
+                <h3>รายการออเดอร์ล่าสุด</h3>
+                <p class="text-muted">ระบบนี้จะเชื่อมต่อกับ Neo4j Graph Database</p>
+                <!-- ตารางตัวอย่าง -->
+                <table style="width: 100%; margin-top: 15px; text-align: left; border-collapse: collapse;">
+                    <tr style="border-bottom: 1px solid var(--border-color);">
+                        <th style="padding: 10px 0;">รหัสออเดอร์</th>
+                        <th>ลูกค้า</th>
+                        <th>สถานะ</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0;">ORD-001</td>
+                        <td>Alice</td>
+                        <td><span class="badge badge-success">เสร็จสิ้น</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0;">ORD-002</td>
+                        <td>Bob</td>
+                        <td><span class="badge badge-warning">กำลังรอ</span></td>
+                    </tr>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

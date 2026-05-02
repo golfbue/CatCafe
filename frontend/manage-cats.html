@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NekoCafe Admin - Manage Cats</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>NekoCafe</h2>
+                <span class="text-muted">Admin System</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="admin.html">📊 แดชบอร์ด (Dashboard)</a></li>
+                <li><a href="manage-cats.html" class="active">🐈 จัดการแมว</a></li>
+                <li><a href="manage-orders.html">☕ จัดการออเดอร์</a></li>
+                <li style="margin-top: 40px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+                    <a href="index.html">⬅️ กลับหน้า Customer</a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h1>จัดการข้อมูลน้องแมว</h1>
+                <button class="btn btn-primary" onclick="alert('เปิดฟอร์มเพิ่มแมวใหม่')">+ เพิ่มแมวใหม่</button>
+            </div>
+
+            <div class="card">
+                <table style="width: 100%; text-align: left; border-collapse: collapse;">
+                    <thead>
+                        <tr style="border-bottom: 2px solid var(--border-color);">
+                            <th style="padding: 12px 0;">ชื่อแมว</th>
+                            <th>พันธุ์</th>
+                            <th>สุขภาพ</th>
+                            <th>ความนิยม</th>
+                            <th>จัดการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 12px 0;">Mochi</td>
+                            <td>British Shorthair</td>
+                            <td><span class="badge badge-success">แข็งแรง</span></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 4px 8px;">แก้ไข</button>
+                                <button class="btn btn-secondary" style="padding: 4px 8px; color: red;">ลบ</button>
+                            </td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 12px 0;">Luna</td>
+                            <td>Persian</td>
+                            <td><span class="badge badge-success">แข็งแรง</span></td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>
+                                <button class="btn btn-secondary" style="padding: 4px 8px;">แก้ไข</button>
+                                <button class="btn btn-secondary" style="padding: 4px 8px; color: red;">ลบ</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

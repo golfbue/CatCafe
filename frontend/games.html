@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NekoCafe - Board Games</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>NekoCafe</h2>
+                <span class="text-muted">Customer Portal</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html">🏠 หน้าแรก (Home)</a></li>
+                <li><a href="menu.html">☕ สั่งเครื่องดื่ม (Menu)</a></li>
+                <li><a href="cats.html">🐈 ดูน้องแมว (Cats)</a></li>
+                <li><a href="games.html" class="active">🎲 บอร์ดเกม (Games)</a></li>
+                <li style="margin-top: 40px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+                    <a href="admin.html">⚙️ ไปหน้า Admin</a>
+                </li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <h1>บอร์ดเกมที่มีให้ยืม</h1>
+            <p class="text-muted">เลือกเกมที่สนใจและยืมมาเล่นที่โต๊ะได้ฟรี</p>
+
+            <div class="grid-cards">
+                <div class="card">
+                    <div style="height: 120px; background: #ffeaa7; border-radius: 6px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">📦</div>
+                    <h3>Catan</h3>
+                    <p class="text-muted">ประเภท: Strategy (3-4 คน)</p>
+                    <span class="badge badge-success" style="margin-top: 5px;">ว่าง</span>
+                    <button class="btn btn-primary mt-2" style="width: 100%;" onclick="borrowGame('Catan')">ยืมเล่น</button>
+                </div>
+
+                <div class="card">
+                    <div style="height: 120px; background: #fab1a0; border-radius: 6px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🃏</div>
+                    <h3>Exploding Kittens</h3>
+                    <p class="text-muted">ประเภท: Card Game (2-5 คน)</p>
+                    <span class="badge badge-success" style="margin-top: 5px;">ว่าง</span>
+                    <button class="btn btn-primary mt-2" style="width: 100%;" onclick="borrowGame('Exploding Kittens')">ยืมเล่น</button>
+                </div>
+
+                <div class="card">
+                    <div style="height: 120px; background: #74b9ff; border-radius: 6px; margin-bottom: 10px; display: flex; align-items: center; justify-content: center; font-size: 2.5rem;">🏰</div>
+                    <h3>Splendor</h3>
+                    <p class="text-muted">ประเภท: Board Game (2-4 คน)</p>
+                    <span class="badge badge-warning" style="margin-top: 5px;">ไม่ว่าง (มีคนเล่นอยู่)</span>
+                    <button class="btn btn-secondary mt-2" style="width: 100%; cursor: not-allowed;" disabled>ยืมเล่น</button>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

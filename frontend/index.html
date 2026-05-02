@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NekoCafe - Customer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Menu -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>NekoCafe</h2>
+                <span class="text-muted">Customer Portal</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">🏠 หน้าแรก (Home)</a></li>
+                <li><a href="menu.html">☕ สั่งเครื่องดื่ม (Menu)</a></li>
+                <li><a href="cats.html">🐈 ดูน้องแมว (Cats)</a></li>
+                <li><a href="games.html">🎲 บอร์ดเกม (Games)</a></li>
+                <li style="margin-top: 40px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+                    <a href="admin.html">⚙️ ไปหน้า Admin</a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <h1>ยินดีต้อนรับสู่ NekoCafe!</h1>
+            <p class="text-muted" style="margin-bottom: 30px;">คาเฟ่แมวและบอร์ดเกมที่คุณสามารถพักผ่อนได้อย่างเต็มที่</p>
+
+            <div class="grid-cards">
+                <div class="card">
+                    <h3>🐈 เล่นกับแมว</h3>
+                    <p class="text-muted">บันทึกประวัติการเล่นกับน้องแมวแต่ละตัวในร้าน</p>
+                    <a href="cats.html" class="btn btn-primary mt-2">ดูรายชื่อน้องแมว</a>
+                </div>
+                
+                <div class="card">
+                    <h3>☕ สั่งเครื่องดื่ม</h3>
+                    <p class="text-muted">ดูเมนูอาหาร เครื่องดื่ม และทำการสั่งซื้อที่โต๊ะ</p>
+                    <a href="menu.html" class="btn btn-primary mt-2">ดูเมนู</a>
+                </div>
+
+                <div class="card">
+                    <h3>🎲 ยืมบอร์ดเกม</h3>
+                    <p class="text-muted">มีบอร์ดเกมให้เลือกยืมเล่นฟรีมากกว่า 50 เกม</p>
+                    <a href="games.html" class="btn btn-primary mt-2">ดูบอร์ดเกม</a>
+                </div>
+            </div>
+
+            <div class="card mt-2">
+                <h3>ทดสอบดึงข้อมูลลูกค้าจาก Backend (Neo4j)</h3>
+                <button class="btn btn-primary" onclick="fetchCustomers()">คลิกเพื่อโหลดข้อมูล</button>
+                <ul id="customer-list" style="margin-top: 15px; padding-left: 20px;"></ul>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
