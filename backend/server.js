@@ -1,13 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const jsonDb = require('./jsonDb');
+const multer = require('multer');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+const upload = multer({ dest: 'uploads/' });
+
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
 app.use(express.static('../frontend'));
 
 // Helper for dynamic CRUD routes
@@ -21,8 +26,13 @@ const setupCrud = (collection, idField = 'id') => {
         item ? res.json(item) : res.status(404).json({ message: 'Not found' });
     });
 
-    app.post(`/api/${collection}`, (req, res) => {
+    app.post(`/api/${collection}`, upload.any(), (req, res) => {
         const payload = req.body;
+        if (req.files) {
+            req.files.forEach(file => {
+                payload[file.fieldname] = `/uploads/${file.filename}`;
+            });
+        }
         if (!payload[idField]) {
             payload[idField] = Date.now(); // Auto-generate ID
         }
@@ -30,8 +40,14 @@ const setupCrud = (collection, idField = 'id') => {
         res.status(201).json(newItem);
     });
 
-    app.put(`/api/${collection}/:id`, (req, res) => {
-        const updated = jsonDb.update(collection, req.params.id, req.body, idField);
+    app.put(`/api/${collection}/:id`, upload.any(), (req, res) => {
+        const payload = req.body;
+        if (req.files) {
+            req.files.forEach(file => {
+                payload[file.fieldname] = `/uploads/${file.filename}`;
+            });
+        }
+        const updated = jsonDb.update(collection, req.params.id, payload, idField);
         updated ? res.json(updated) : res.status(404).json({ message: 'Not found' });
     });
 
@@ -122,7 +138,7 @@ app.post('/api/actions/order', (req, res) => {
         order_id,
         visit_id,
         order_time: new Date().toISOString(),
-        status: 'pending'
+        status: 'กำลังทำ'
     });
     
     items.forEach(item => {

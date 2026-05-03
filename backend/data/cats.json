@@ -3,30 +3,35 @@
     "cat_id": 1,
     "cat_name": "Mochi",
     "breed": "British Shorthair",
-    "staff_id": 3
+    "staff_id": 3,
+    "image": "https://images.unsplash.com/photo-1574158622682-e40e69881006?w=200&h=200&fit=crop"
   },
   {
     "cat_id": 2,
     "cat_name": "Latte",
     "breed": "Scottish Fold",
-    "staff_id": 3
+    "staff_id": 3,
+    "image": "https://images.unsplash.com/photo-1595433707802-6b2626ef1c91?w=200&h=200&fit=crop"
   },
   {
     "cat_id": 3,
     "cat_name": "Kuro",
     "breed": "Bombay",
-    "staff_id": 1
+    "staff_id": 1,
+    "image": "https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?w=200&h=200&fit=crop"
   },
   {
     "cat_id": 4,
     "cat_name": "Shiro",
     "breed": "Khao Manee",
-    "staff_id": 2
+    "staff_id": 2,
+    "image": "https://images.unsplash.com/photo-1606214174585-fe31582dc6ee?w=200&h=200&fit=crop"
   },
   {
     "cat_id": 5,
     "cat_name": "Garfield",
     "breed": "Persian",
-    "staff_id": 3
+    "staff_id": 3,
+    "image": "https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?w=200&h=200&fit=crop"
   }
 ]

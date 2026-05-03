@@ -3,30 +3,35 @@
     "game_id": 1,
     "game_name": "Catan",
     "category": "Strategy",
-    "status": "available"
+    "status": "available",
+    "image": "https://dummyimage.com/200x200/FF5722/FFFFFF&text=Catan"
   },
   {
     "game_id": 2,
     "game_name": "Splendor",
     "category": "Strategy",
-    "status": "available"
+    "status": "available",
+    "image": "https://dummyimage.com/200x200/2196F3/FFFFFF&text=Splendor"
   },
   {
     "game_id": 3,
     "game_name": "Uno",
     "category": "Party",
-    "status": "available"
+    "status": "available",
+    "image": "https://dummyimage.com/200x200/4CAF50/FFFFFF&text=Uno"
   },
   {
     "game_id": 4,
     "game_name": "Exploding Kittens",
     "category": "Party",
-    "status": "available"
+    "status": "available",
+    "image": "https://dummyimage.com/200x200/FF9800/FFFFFF&text=Exploding+Kittens"
   },
   {
     "game_id": 5,
     "game_name": "Ticket to Ride",
     "category": "Strategy",
-    "status": "available"
+    "status": "available",
+    "image": "https://dummyimage.com/200x200/9C27B0/FFFFFF&text=Ticket+to+Ride"
   }
 ]

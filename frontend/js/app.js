@@ -332,11 +332,25 @@ async function loadPage(pageId) {
             const visits = await (await fetch(`${API}/visits`)).json();
             const custs = await (await fetch(`${API}/customers`)).json();
             const orders = await (await fetch(`${API}/orders`)).json();
+            const cats = await (await fetch(`${API}/cats`)).json();
+            const staff = await (await fetch(`${API}/staff`)).json();
+            const orderDetails = await (await fetch(`${API}/order_details`)).json();
+            const menu = await (await fetch(`${API}/menu`)).json();
             
+            let revenue = 0;
+            orderDetails.forEach(detail => {
+                const menuItem = menu.find(m => m.menu_id == detail.menu_id);
+                if (menuItem) revenue += menuItem.price * detail.quantity;
+            });
+            
+            document.getElementById('stat-rev').innerText = '฿' + revenue;
             document.getElementById('stat-visits').innerText = visits.length;
             document.getElementById('stat-cust').innerText = custs.length;
             document.getElementById('stat-orders').innerText = orders.length;
-            document.getElementById('stat-rev').innerText = '฿' + (visits.length * 50); // Mock revenue based on base fee
+            document.getElementById('stat-cats').innerText = cats.length;
+            document.getElementById('stat-staff').innerText = staff.length;
+            document.getElementById('stat-in-progress').innerText = orders.filter(o => o.status === 'กำลังทำ').length;
+            document.getElementById('stat-completed').innerText = orders.filter(o => o.status === 'เสร็จแล้ว').length;
         }
 
         
@@ -376,10 +390,10 @@ async function loadPage(pageId) {
                 head.innerHTML = keys.map(k => `<th>${k}</th>`).join('') + '<th>จัดการ (Action)</th>';
                 body.innerHTML = data.map(item => `
                     <tr>
-                        ${keys.map(k => `<td>${item[k]}</td>`).join('')}
+                        ${keys.map(k => `<td>${k === 'image' && item[k] ? `<img src="${item[k]}" width="50" height="50" style="object-fit: cover;">` : item[k]}</td>`).join('')}
                         <td>
                             ${collection === 'boardgames' && item.status !== 'available' ? `<button onclick="returnGame(${item.game_id}); setTimeout(()=>openManage('boardgames'), 500);" style="color:#10b981; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">คืนเกม (Return)</button>` : ''}
-                            ${['staff', 'cats', 'menu', 'boardgames'].includes(collection) ? `<button onclick="showEditModal('${collection}', '${item[keys[0]]}')" style="color:#3b82f6; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">แก้ไข</button>` : ''}
+                            ${['staff', 'cats', 'menu', 'boardgames', 'orders'].includes(collection) ? `<button onclick="showEditModal('${collection}', '${item[keys[0]]}')" style="color:#3b82f6; background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">แก้ไข</button>` : ''}
                             <button onclick="viewDetails('${collection}', '${item[keys[0]]}')" style="color:var(--accent); background:none; border:none; cursor:pointer; font-weight:bold; margin-right:1rem;">รายละเอียด</button>
                             <button onclick="deleteItem('${collection}', '${item[keys[0]]}')" style="color:#ef4444; background:none; border:none; cursor:pointer; font-weight:bold;">ลบ (Delete)</button>
                         </td>
@@ -398,9 +412,10 @@ async function loadPage(pageId) {
                 let html = `<div style="background: var(--bg); padding: 1rem; border-radius: 0.5rem; margin-bottom: 1rem;">`;
                 for (const [key, value] of Object.entries(itemData)) {
                     if (key !== 'password') {
+                        const displayValue = key === 'image' && value ? `<img src="${value}" width="100" height="100" style="object-fit: cover; border-radius: 0.5rem;">` : (value === null ? '-' : value);
                         html += `<div class="menu-item" style="background: transparent; border-bottom: 1px solid #334155; padding: 0.5rem 0;">
                                     <span style="color: var(--text-muted);">${key}</span>
-                                    <span style="font-weight: bold; text-align: right;">${value === null ? '-' : value}</span>
+                                    <span style="font-weight: bold; text-align: right;">${displayValue}</span>
                                  </div>`;
                     }
                 }
@@ -479,22 +494,29 @@ async function loadPage(pageId) {
                 'staff': [
                     { name: 'staff_name', label: 'ชื่อพนักงาน', type: 'text' },
                     { name: 'position', label: 'ตำแหน่ง (เช่น Admin, Manager)', type: 'text' },
-                    { name: 'password', label: 'รหัสผ่าน', type: 'password' }
+                    { name: 'password', label: 'รหัสผ่าน', type: 'password' },
+                    { name: 'image', label: 'รูปภาพ', type: 'file' }
                 ],
                 'cats': [
                     { name: 'cat_name', label: 'ชื่อแมว', type: 'text' },
                     { name: 'breed', label: 'สายพันธุ์', type: 'text' },
-                    { name: 'staff_id', label: 'รหัสพนักงานที่ดูแล (Staff ID)', type: 'number' }
+                    { name: 'staff_id', label: 'รหัสพนักงานที่ดูแล (Staff ID)', type: 'number' },
+                    { name: 'image', label: 'รูปภาพ', type: 'file' }
                 ],
                 'menu': [
                     { name: 'menu_name', label: 'ชื่อเมนู', type: 'text' },
                     { name: 'price', label: 'ราคา', type: 'number' },
-                    { name: 'category', label: 'หมวดหมู่', type: 'text' }
+                    { name: 'category', label: 'หมวดหมู่', type: 'text' },
+                    { name: 'image', label: 'รูปภาพ', type: 'file' }
                 ],
                 'boardgames': [
                     { name: 'game_name', label: 'ชื่อเกม', type: 'text' },
-                    { name: 'category', label: 'หมวดหมู่', type: 'text' },
-                    { name: 'status', label: 'สถานะ', type: 'select', options: ['available', 'borrowed'] }
+                    { name: 'category', label: 'หมวดหมู่', type: 'select', options: ['Strategy', 'Party'] },
+                    { name: 'status', label: 'สถานะ', type: 'select', options: ['available', 'borrowed'] },
+                    { name: 'image', label: 'รูปภาพ', type: 'file' }
+                ],
+                'orders': [
+                    { name: 'status', label: 'สถานะ', type: 'select', options: ['กำลังทำ', 'เสร็จแล้ว'] }
                 ]
             };
 
@@ -510,6 +532,10 @@ async function loadPage(pageId) {
                     return `<div class="form-group"><label>${f.label}</label>
                             <select id="add_${f.name}" required>${f.options.map(o => `<option value="${o}" ${o === value ? 'selected' : ''}>${o}</option>`).join('')}</select></div>`;
                 }
+                if (f.type === 'file') {
+                    const preview = value ? `<img src="${value}" width="100" style="margin-bottom: 10px;"><br>` : '';
+                    return `<div class="form-group"><label>${f.label}</label>${preview}<input type="file" id="add_${f.name}" accept="image/*"></div>`;
+                }
                 return `<div class="form-group"><label>${f.label}</label>
                         <input type="${f.type}" id="add_${f.name}" value="${value}" required></div>`;
             }).join('');
@@ -522,23 +548,28 @@ async function loadPage(pageId) {
         async function submitAddForm(e) {
             e.preventDefault();
             const fieldsMap = {
-                'staff': ['staff_name', 'position', 'password'],
-                'cats': ['cat_name', 'breed', 'staff_id'],
-                'menu': ['menu_name', 'price', 'category'],
-                'boardgames': ['game_name', 'category', 'status']
+                'staff': ['staff_name', 'position', 'password', 'image'],
+                'cats': ['cat_name', 'breed', 'staff_id', 'image'],
+                'menu': ['menu_name', 'price', 'category', 'image'],
+                'boardgames': ['game_name', 'category', 'status', 'image'],
+                'orders': ['status']
             };
 
             const fields = fieldsMap[currentManageCollection];
-            const data = {};
+            const formData = new FormData();
             fields.forEach(f => {
-                data[f] = document.getElementById('add_' + f).value;
+                const input = document.getElementById('add_' + f);
+                if (input.type === 'file' && input.files[0]) {
+                    formData.append(f, input.files[0]);
+                } else {
+                    formData.append(f, input.value);
+                }
             });
 
             try {
                 await fetch(`${API}/${currentManageCollection}${isEditMode ? '/' + editingItemId : ''}`, {
                     method: isEditMode ? 'PUT' : 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
+                    body: formData
                 });
                 alert(isEditMode ? 'แก้ไขข้อมูลสำเร็จ!' : 'เพิ่มข้อมูลสำเร็จ!');
                 document.getElementById('add-modal').classList.remove('active');

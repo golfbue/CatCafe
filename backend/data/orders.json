@@ -3,36 +3,36 @@
     "order_id": 5001,
     "visit_id": 1001,
     "order_time": "2024-05-02T10:15:00.000Z",
-    "status": "completed"
+    "status": "เสร็จแล้ว"
   },
   {
     "order_id": 5002,
     "visit_id": 1002,
     "order_time": "2024-05-02T11:45:00.000Z",
-    "status": "pending"
+    "status": "กำลังทำ"
   },
   {
     "order_id": 5003,
     "visit_id": 1003,
     "order_time": "2024-05-02T14:10:00.000Z",
-    "status": "completed"
+    "status": "เสร็จแล้ว"
   },
   {
     "order_id": 5004,
     "visit_id": 1004,
     "order_time": "2024-05-02T16:30:00.000Z",
-    "status": "pending"
+    "status": "กำลังทำ"
   },
   {
     "order_id": 1777739108055,
     "visit_id": 1777739108050,
     "order_time": "2026-05-02T16:25:08.055Z",
-    "status": "pending"
+    "status": "กำลังทำ"
   },
   {
     "order_id": 1777740831605,
     "visit_id": 1777740825358,
     "order_time": "2026-05-02T16:53:51.605Z",
-    "status": "pending"
+    "status": "กำลังทำ"
   }
 ]
