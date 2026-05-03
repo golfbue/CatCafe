@@ -1,12 +1,17 @@
 <div id="s-manage" class="page">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
-                    <h1 id="manage-title" style="margin-bottom: 0;">ระบบจัดการข้อมูล</h1>
-                    <button id="add-new-btn" class="btn btn-p" onclick="showAddModal()">+ เพิ่มข้อมูล</button>
-                </div>
-                <div class="card">
-                    <table id="manage-table">
-                        <thead><tr id="manage-head"></tr></thead>
-                        <tbody id="manage-body"></tbody>
-                    </table>
-                </div>
-            </div>
+    <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border);">
+        <div>
+            <h1 id="manage-title" style="margin-bottom: 0.5rem; font-family: 'Playfair Display', serif; font-size: 3rem;">Management</h1>
+            <p style="color: var(--text-muted);">จัดการข้อมูลพื้นฐานของระบบคาเฟ่ทั้งหมด</p>
+        </div>
+        <button id="add-new-btn" class="btn btn-p" onclick="showAddModal()" style="display: flex; align-items: center; gap: 0.5rem; padding: 1rem 2rem;">
+            <span>✨ เพิ่มข้อมูลใหม่</span>
+        </button>
+    </div>
+    <div style="overflow-x: auto;">
+        <table id="manage-table">
+            <thead><tr id="manage-head"></tr></thead>
+            <tbody id="manage-body"></tbody>
+        </table>
+    </div>
+</div>

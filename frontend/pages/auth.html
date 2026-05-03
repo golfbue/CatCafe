@@ -1,39 +1,63 @@
 <div id="auth-modal" class="modal active">
-        <div class="modal-content">
-            <h2 style="margin-bottom: 1rem; text-align: center; color: var(--accent); font-family: 'Playfair Display', serif;">ระบบจัดการ CatCafe</h2>
-            <div class="auth-tabs">
-                <div class="auth-tab active" onclick="setAuthTab('login')">เข้าสู่ระบบ</div>
-                <div class="auth-tab" onclick="setAuthTab('register')">สมัครสมาชิก</div>
-            </div>
+    <div class="modal-content" style="position: relative; padding: 3rem 2.5rem;">
+        <!-- Close Button -->
+        <button onclick="document.getElementById('auth-modal').classList.remove('active')" 
+                style="position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-muted); transition: var(--transition);">
+            ✕
+        </button>
 
-            <!-- Login Form -->
-            <form id="login-form" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label>ชื่อผู้ใช้งาน หรือ เบอร์โทรศัพท์</label>
-                    <input type="text" id="login-id" required placeholder="เช่น John Doe หรือ 0812345678">
-                </div>
-                <div class="form-group">
-                    <label>รหัสผ่าน</label>
-                    <input type="password" id="login-pass" required>
-                </div>
-                <button type="submit" class="btn btn-p" style="width: 100%;">เข้าสู่ระบบ</button>
-            </form>
+        <h2 style="margin-bottom: 0.5rem; text-align: center; color: var(--primary); font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900;">
+            NekoCafe 🐾</h2>
+        <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem; font-size: 1rem; font-weight: 600;">
+            ระบบจัดการคาเฟ่แมวระดับพรีเมียม</p>
 
-            <!-- Register Form -->
-            <form id="register-form" onsubmit="handleRegister(event)" style="display: none;">
-                <div class="form-group">
-                    <label>ชื่อ-นามสกุล</label>
-                    <input type="text" id="reg-name" required>
-                </div>
-                <div class="form-group">
-                    <label>เบอร์โทรศัพท์ (เฉพาะลูกค้า)</label>
-                    <input type="text" id="reg-phone">
-                </div>
-                <div class="form-group">
-                    <label>รหัสผ่าน</label>
-                    <input type="password" id="reg-pass" required>
-                </div>
-                <button type="submit" class="btn btn-s" style="width: 100%;">สร้างบัญชีผู้ใช้</button>
-            </form>
+        <div class="auth-tabs">
+            <div class="auth-tab active" onclick="setAuthTab('login')">เข้าสู่ระบบ</div>
+            <div class="auth-tab" onclick="setAuthTab('register')">สมัครสมาชิก</div>
         </div>
+
+        <!-- Login Form -->
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label>ชื่อผู้ใช้งาน หรือ เบอร์โทรศัพท์</label>
+                <input type="text" id="login-id" required placeholder="เช่น Golfbue หรือ 09xxxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>รหัสผ่าน</label>
+                <input type="password" id="login-pass" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn btn-p"
+                style="width: 100%; margin-top: 1rem; padding: 1.2rem;">เข้าสู่ระบบ</button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="register-form" onsubmit="handleRegister(event)" style="display: none;">
+            <div class="form-group">
+                <label>ชื่อ-นามสกุล</label>
+                <input type="text" id="reg-name" required placeholder="วรากร เองจ้า">
+            </div>
+            <div class="form-group">
+                <label>เบอร์โทรศัพท์</label>
+                <input type="text" id="reg-phone" placeholder="08x-xxx-xxxx">
+            </div>
+            <div class="form-group">
+                <label>รหัสผ่าน</label>
+                <input type="password" id="reg-pass" required placeholder="••••••••">
+            </div>
+            <div class="form-group">
+                <label>ยืนยันรหัสผ่าน</label>
+                <input type="password" id="reg-pass-confirm" required placeholder="••••••••">
+            </div>
+            <button type="submit" class="btn btn-p"
+                style="width: 100%; margin-top: 1rem; padding: 1.2rem;">สร้างบัญชีผู้ใช้</button>
+        </form>
+
+        <!-- Back Link -->
+        <p style="text-align: center; margin-top: 1.5rem; font-size: 0.9rem;">
+            <a href="#" onclick="document.getElementById('auth-modal').classList.remove('active')" 
+               style="color: var(--text-muted); text-decoration: none; font-weight: 600; transition: var(--transition);">
+               ← ย้อนกลับไปหน้าหลัก
+            </a>
+        </p>
     </div>
+</div>

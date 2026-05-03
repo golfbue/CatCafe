@@ -1,9 +1,35 @@
 <div id="c-orders" class="page">
-                <h1>เมนูและสั่งอาหาร</h1>
-                <div class="grid" id="menu-grid"></div>
-                <div class="card" style="margin-top: 2rem;">
-                    <h3>ตะกร้าสินค้าของคุณ</h3>
-                    <div id="cart-list"></div>
-                    <button class="btn btn-s" onclick="placeOrder()">ยืนยันการสั่ง (Place Order)</button>
+    <div style="margin-bottom: 2rem;">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem;">🍔 Menu & Orders</h1>
+        <p style="color: var(--text-muted);">เลือกเมนูแสนอร่อยและเครื่องดื่มสดชื่นเพื่อเริ่มการเข้าใช้บริการของคุณ</p>
+    </div>
+    
+    <div style="display: grid; grid-template-columns: 1fr 350px; gap: 2rem; align-items: start;">
+        <div class="grid" id="menu-grid"></div>
+        
+        <aside style="position: sticky; top: 100px; display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="card" style="padding: 2rem; border-radius: 2rem; background: var(--card-bg);">
+                <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+                    🛒 ตะกร้าของคุณ
+                </h3>
+                <div id="cart-list" style="margin-bottom: 1.5rem; max-height: 400px; overflow-y: auto;"></div>
+                
+                <div id="cart-summary" style="margin-bottom: 2rem;"></div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+                    <button class="btn btn-p" onclick="placeOrder()" style="width: 100%; padding: 1.2rem; font-size: 1.1rem;">ยืนยันการสั่ง (Order Now) 🐾</button>
+                    <button class="btn" onclick="clearCart()" style="width: 100%; background: hsla(0, 0%, 0%, 0.05); color: var(--text-muted); font-size: 0.9rem; padding: 0.8rem;">ล้างตะกร้า (Clear Cart)</button>
                 </div>
             </div>
+
+            <div class="card" style="padding: 2rem; border-radius: 2rem; background: var(--card-bg);">
+                <h3 style="font-family: 'Playfair Display', serif; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                    🍳 ติดตามสถานะ
+                </h3>
+                <div id="order-status-list" style="max-height: 300px; overflow-y: auto;">
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">ยังไม่มีรายการที่สั่งไปครับ</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>

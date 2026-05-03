@@ -1,13 +1,49 @@
-<div id="s-dashboard" class="page">
-                <h1>แดชบอร์ดสรุปผล</h1>
-                <div class="stats-grid">
-                    <div class="stat-card"><h3>รายได้รวม</h3><p id="stat-rev">฿0</p></div>
-                    <div class="stat-card"><h3>การเข้าใช้บริการทั้งหมด</h3><p id="stat-visits">0</p></div>
-                    <div class="stat-card"><h3>จำนวนลูกค้า</h3><p id="stat-cust">0</p></div>
-                    <div class="stat-card"><h3>ออเดอร์ทั้งหมด</h3><p id="stat-orders">0</p></div>
-                    <div class="stat-card"><h3>จำนวนแมว</h3><p id="stat-cats">0</p></div>
-                    <div class="stat-card"><h3>จำนวนพนักงาน</h3><p id="stat-staff">0</p></div>
-                    <div class="stat-card"><h3>ออเดอร์กำลังดำเนินการ</h3><p id="stat-in-progress">0</p></div>
-                    <div class="stat-card"><h3>ออเดอร์สำเร็จ</h3><p id="stat-completed">0</p></div>
-                </div>
+<div id="page-dashboard" class="page">
+    <div style="margin-bottom: 2rem;">
+        <h1 style="font-family: 'Playfair Display', serif; font-size: 3rem;">📊 Admin Insights</h1>
+        <p style="color: var(--text-muted);">สรุปข้อมูลภาพรวมของคาเฟ่แมววันนี้</p>
+    </div>
+
+    <!-- Daily Quick Summary -->
+    <div class="grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+        <div class="card" style="padding: 1.5rem; border-left: 8px solid var(--primary);">
+            <h3 style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">รายได้วันนี้ (Today)</h3>
+            <p id="stat-revenue-today" style="font-size: 2.2rem; font-weight: 900; color: var(--primary);">฿0</p>
+        </div>
+        <div class="card" style="padding: 1.5rem; border-left: 8px solid var(--accent);">
+            <h3 style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">ลูกค้าวันนี้ (Visits)</h3>
+            <p id="stat-visits-today" style="font-size: 2.2rem; font-weight: 900; color: var(--text);">0 คน</p>
+        </div>
+        <div class="card" style="padding: 1.5rem; border-left: 8px solid var(--success);">
+            <h3 style="font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 0.5rem;">รายได้เมื่อวาน (Yesterday)</h3>
+            <p id="stat-revenue-yesterday" style="font-size: 2.2rem; font-weight: 900; color: var(--success);">฿0</p>
+        </div>
+    </div>
+
+    <div class="grid" style="grid-template-columns: 1fr 1fr; gap: 2rem;">
+        <div class="card" style="padding: 2rem;">
+            <h3 style="margin-bottom: 1.5rem; font-family: 'Playfair Display', serif;">🔥 เมนูยอดฮิต</h3>
+            <div id="stat-top-menu" style="display: flex; flex-direction: column; gap: 1rem;">
+                <p style="color: var(--text-muted);">กำลังโหลดข้อมูล...</p>
             </div>
+        </div>
+        
+        <div class="card" style="padding: 2rem;">
+            <h3 style="margin-bottom: 1.5rem; font-family: 'Playfair Display', serif;">📈 รายได้ย้อนหลัง 7 วัน</h3>
+            <div id="stat-weekly-revenue" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Weekly items here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-grid" style="margin-top: 2rem;">
+        <div class="stat-card"><h3>💰 รายได้รวม</h3><p id="stat-rev">฿0</p></div>
+        <div class="stat-card"><h3>📅 ยอดผู้เข้าใช้</h3><p id="stat-visits">0</p></div>
+        <div class="stat-card"><h3>👥 ลูกค้าทั้งหมด</h3><p id="stat-cust">0</p></div>
+        <div class="stat-card"><h3>🧾 ออเดอร์รวม</h3><p id="stat-orders">0</p></div>
+        <div class="stat-card"><h3>🐱 น้องแมว</h3><p id="stat-cats">0</p></div>
+        <div class="stat-card"><h3>👨‍💼 พนักงาน</h3><p id="stat-staff">0</p></div>
+        <div class="stat-card"><h3>⏳ กำลังดำเนินการ</h3><p id="stat-in-progress">0</p></div>
+        <div class="stat-card"><h3>✅ ออเดอร์สำเร็จ</h3><p id="stat-completed">0</p></div>
+    </div>
+</div>

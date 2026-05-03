@@ -9,11 +9,19 @@
     <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
 </head>
 <body>
+    <div class="bg-mesh">
+        <div class="mesh-blob blob-1"></div>
+        <div class="mesh-blob blob-2"></div>
+        <div class="mesh-blob blob-3"></div>
+    </div>
     <nav>
-        <div class="logo">CatCafe Pro</div>
+        <div class="logo" onclick="loadPage('home')" style="cursor: pointer;">NekoCafe 🐾</div>
         <div class="auth-controls" id="auth-controls" style="display: none;">
             <span class="user-info" id="nav-user-info">ยินดีต้อนรับ, ผู้ใช้</span>
-            <button class="btn btn-danger" style="padding: 0.5rem 1rem;" onclick="logout()">ออกจากระบบ</button>
+            <button class="btn btn-danger" style="padding: 0.5rem 1rem;" onclick="logout()">Logout</button>
+        </div>
+        <div id="guest-controls" style="display: flex; gap: 1rem;">
+            <button class="btn btn-p" style="padding: 0.5rem 1.2rem; font-size: 0.85rem;" onclick="document.getElementById('auth-modal').classList.add('active')">Login / Register 🐾</button>
         </div>
     </nav>
 

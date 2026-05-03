@@ -26,5 +26,19 @@
     "game_id": 1,
     "borrow_time": "2026-05-02T17:16:23.649Z",
     "return_time": null
+  },
+  {
+    "borrow_id": 1777791166983,
+    "visit_id": 1777790355253,
+    "game_id": 2,
+    "borrow_time": "2026-05-03T06:52:46.983Z",
+    "return_time": null
+  },
+  {
+    "borrow_id": 1777791758829,
+    "visit_id": 1777791289956,
+    "game_id": 2,
+    "borrow_time": "2026-05-03T07:02:38.829Z",
+    "return_time": null
   }
 ]
