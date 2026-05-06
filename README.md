@@ -106,6 +106,22 @@ npm start
 - **Username:** `neo4j`
 - **Password:** `catcafe2024`
 
+### ตัวอย่างคำสั่ง Cypher ที่น่าสนใจ:
+- **ดูข้อมูลทั้งหมดในระบบ:**
+  ```cypher
+  MATCH (n) RETURN n LIMIT 50
+  ```
+- **ดูความสัมพันธ์ระหว่างลูกค้าที่มาเล่นกับน้องแมว:**
+  ```cypher
+  MATCH (c:Customer)-[r:INTERACTED_WITH]->(cat:Cat) RETURN c, r, cat
+  ```
+- **ค้นหาลูกค้าที่มียอดการสั่งซื้อสูงสุด:**
+  ```cypher
+  MATCH (c:Customer)-[:PLACED]->(o:Order)
+  RETURN c.name, sum(o.totalPrice) as total
+  ORDER BY total DESC
+  ```
+
 ---
 
 ##  ทีมผู้พัฒนา (Development Team)
