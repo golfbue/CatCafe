@@ -2,6 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { getSession } = require('../db');
 
+// Helper: convert Neo4j Integer to plain JS number
+function toNum(val) {
+    if (val && typeof val === 'object' && typeof val.toNumber === 'function') return val.toNumber();
+    if (val && typeof val === 'object' && 'low' in val) return val.low;
+    return val;
+}
+
 // ดึงข้อมูล Graph ทั้งหมดเพื่อไปวาดรูป (Nodes + Links)
 router.get('/', async (req, res) => {
     const session = getSession();
@@ -22,13 +29,15 @@ router.get('/', async (req, res) => {
         result.records.forEach(record => {
             const source = record.get('source');
             const target = record.get('target');
+            const srcId = toNum(source.id);
+            const tgtId = toNum(target.id);
             
-            if (!nodes.has(source.id)) nodes.set(source.id, { id: source.id, label: source.label, name: source.properties.name || source.properties.id });
-            if (!nodes.has(target.id)) nodes.set(target.id, { id: target.id, label: target.label, name: target.properties.name || target.properties.id });
+            if (!nodes.has(srcId)) nodes.set(srcId, { id: srcId, label: source.label, name: source.properties.name || source.properties.id });
+            if (!nodes.has(tgtId)) nodes.set(tgtId, { id: tgtId, label: target.label, name: target.properties.name || target.properties.id });
             
             links.push({
-                source: source.id,
-                target: target.id,
+                source: srcId,
+                target: tgtId,
                 type: record.get('relType')
             });
         });
@@ -42,3 +51,4 @@ router.get('/', async (req, res) => {
 });
 
 module.exports = router;
+

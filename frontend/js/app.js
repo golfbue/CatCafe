@@ -778,34 +778,91 @@ async function loadPage(pageId) {
 
         // --- GRAPH VISUALIZATION ---
         async function renderGraph() {
-            const custs = await (await fetch(`${API}/customers`)).json();
-            const visits = await (await fetch(`${API}/visits`)).json();
-            const orders = await (await fetch(`${API}/orders`)).json();
-            const staff = await (await fetch(`${API}/staff`)).json();
-
-            const nodes = [];
-            const edges = [];
-
-            custs.forEach(c => nodes.push({ id: 'c'+c.customer_id, label: c.name, color: '#6366f1' }));
-            staff.forEach(s => nodes.push({ id: 's'+s.staff_id, label: s.staff_name, color: '#10b981' }));
-            visits.forEach(v => {
-                nodes.push({ id: 'v'+v.visit_id, label: 'การเข้าใช้บริการ', color: '#ec4899', shape: 'diamond' });
-                edges.push({ from: 'c'+v.customer_id, to: 'v'+v.visit_id, label: 'VISITS (เข้ามา)' });
-                edges.push({ from: 'v'+v.visit_id, to: 's'+v.staff_id, label: 'HANDLED_BY (ดูแลโดย)' });
-            });
-            orders.forEach(o => {
-                nodes.push({ id: 'o'+o.order_id, label: 'ออเดอร์', color: '#f59e0b' });
-                edges.push({ from: 'v'+o.visit_id, to: 'o'+o.order_id, label: 'ORDERED (สั่งอาหาร)' });
-            });
-
             const container = document.getElementById('graph-container');
-            const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
-            const options = {
-                physics: { stabilization: true },
-                edges: { arrows: 'to', font: { size: 10, color: '#fff' } },
-                nodes: { font: { color: '#fff' } }
+            if (!container) return;
+
+            // Show loading
+            container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);font-size:1.2rem;">⏳ กำลังโหลดกราฟจาก Neo4j...</div>';
+
+            // Color map per node label
+            const colorMap = {
+                'Customer': '#6366f1',
+                'Staff': '#10b981',
+                'Visit': '#ec4899',
+                'Order': '#f59e0b',
+                'Menu': '#ef4444',
+                'Cat': '#f97316',
+                'Boardgame': '#8b5cf6',
+                'Payment': '#14b8a6'
             };
-            new vis.Network(container, data, options);
+
+            const shapeMap = {
+                'Visit': 'diamond',
+                'Order': 'box',
+                'Payment': 'triangle'
+            };
+
+            try {
+                const res = await fetch(`${API}/graph`);
+                if (!res.ok) throw new Error('ไม่สามารถดึงข้อมูลกราฟได้: ' + res.statusText);
+                const graphData = await res.json();
+
+                if (!graphData.nodes || graphData.nodes.length === 0) {
+                    container.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--text-muted);font-size:1.1rem;flex-direction:column;gap:0.5rem;"><span style="font-size:2rem;">📭</span><span>ยังไม่มีข้อมูลในฐานข้อมูล Neo4j</span><span style="font-size:0.85rem;">กรุณาเพิ่มข้อมูลก่อนเพื่อดูความสัมพันธ์</span></div>';
+                    return;
+                }
+
+                // Convert Neo4j integer IDs (they may be objects like {low: N, high: 0})
+                const toId = (val) => {
+                    if (val && typeof val === 'object' && 'low' in val) return val.low;
+                    return val;
+                };
+
+                const nodes = graphData.nodes.map(n => ({
+                    id: toId(n.id),
+                    label: n.name || n.label || 'N/A',
+                    color: colorMap[n.label] || '#64748b',
+                    shape: shapeMap[n.label] || 'dot',
+                    title: `[${n.label}] ${n.name || ''}`
+                }));
+
+                const edges = graphData.links.map((l, i) => ({
+                    id: 'e' + i,
+                    from: toId(l.source),
+                    to: toId(l.target),
+                    label: l.type,
+                    arrows: 'to'
+                }));
+
+                container.innerHTML = '';
+
+                const data = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
+                const options = {
+                    physics: {
+                        stabilization: { iterations: 150 },
+                        barnesHut: { gravitationalConstant: -3000, springLength: 150 }
+                    },
+                    edges: {
+                        arrows: 'to',
+                        font: { size: 10, color: '#888', strokeWidth: 2, strokeColor: '#fff' },
+                        color: { color: '#94a3b8', highlight: '#6366f1' },
+                        smooth: { type: 'cubicBezier' }
+                    },
+                    nodes: {
+                        font: { color: '#fff', size: 14, face: 'Outfit' },
+                        borderWidth: 2,
+                        shadow: true
+                    },
+                    interaction: {
+                        hover: true,
+                        tooltipDelay: 200
+                    }
+                };
+                new vis.Network(container, data, options);
+            } catch (err) {
+                console.error('Graph Error:', err);
+                container.innerHTML = `<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--danger);font-size:1rem;flex-direction:column;gap:0.5rem;"><span style="font-size:2rem;">❌</span><span>เกิดข้อผิดพลาดในการโหลดกราฟ</span><span style="font-size:0.85rem;">${err.message}</span></div>`;
+            }
         }
 
 // Override login/logout to save state
