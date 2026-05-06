@@ -1,10 +1,10 @@
-# 🐈 NekoCafe: CatCafe Management System (Graph Database)
+#  NekoCafe: CatCafe Management System (Graph Database)
 
 ยินดีต้อนรับสู่ **NekoCafe** — ระบบบริหารจัดการคาเฟ่แมวและบอร์ดเกมอัจฉริยะ ที่ขับเคลื่อนด้วยพลังของ **Graph Database (Neo4j)** เพื่อการจัดการความสัมพันธ์ของข้อมูลที่ซับซ้อนได้อย่างมีประสิทธิภาพ
 
 ---
 
-## 🌟 จุดเด่นของโปรเจกต์ (Project Highlights)
+##  จุดเด่นของโปรเจกต์ (Project Highlights)
 
 ระบบนี้ไม่ได้เป็นเพียงแค่โปรแกรม POS ทั่วไป แต่ถูกออกแบบมาเพื่อจัดการความสัมพันธ์แบบโครงข่าย (Relationships) ระหว่าง:
 - **ลูกค้า (Customers):** การเข้าใช้งาน (Visits) และพฤติกรรมการสั่งซื้อ
@@ -14,15 +14,15 @@
 
 ---
 
-## 🚀 ฟีเจอร์หลัก (Key Features)
+##  ฟีเจอร์หลัก (Key Features)
 
-### 👤 สำหรับลูกค้า (Customer Side)
+###  สำหรับลูกค้า (Customer Side)
 - **Visit Tracking:** บันทึกเวลาเข้า-ออกร้าน (Check-in/Check-out) อัตโนมัติ
 - **Food & Drink Ordering:** สั่งเมนูอาหารและเครื่องดื่มผ่านหน้าเว็บ
 - **Board Game Borrowing:** ระบบยืมบอร์ดเกมที่ผูกกับรอบการเข้าใช้งาน
 - **Cat Profiles:** ดูข้อมูลน้องแมวประจำร้าน
 
-### 🛠️ สำหรับผู้ดูแลระบบ (Admin Dashboard)
+###  สำหรับผู้ดูแลระบบ (Admin Dashboard)
 - **Graph Analytics:** วิเคราะห์ข้อมูลความสัมพันธ์ในรูปแบบ Graph
 - **Revenue Dashboard:** สรุปรายได้ รายการอาหารที่ขายดี และจำนวนผู้เข้าใช้งาน
 - **Inventory Management:** จัดการข้อมูลแมว, เมนูอาหาร และบอร์ดเกม
@@ -30,7 +30,7 @@
 
 ---
 
-## 🛠️ เทคโนโลยีที่ใช้ (Tech Stack)
+##  เทคโนโลยีที่ใช้ (Tech Stack)
 
 - **Frontend:** HTML5, Vanilla CSS3, JavaScript (ES6+) — *เน้นความเร็วและง่ายต่อการแก้ไข*
 - **Backend:** Node.js (Express.js)
@@ -39,7 +39,7 @@
 
 ---
 
-## 📦 โครงสร้างโฟลเดอร์ (Project Structure)
+##  โครงสร้างโฟลเดอร์ (Project Structure)
 
 ```text
 CatCafe/
@@ -60,7 +60,7 @@ CatCafe/
 
 ---
 
-## ⚙️ ขั้นตอนการติดตั้งและรันระบบ (Installation Guide)
+##  ขั้นตอนการติดตั้งและรันระบบ (Installation Guide)
 
 ### 1. เตรียมฐานข้อมูล (Neo4j)
 โปรเจกต์นี้ใช้ Docker เพื่อความสะดวกในการติดตั้งฐานข้อมูล:
@@ -92,14 +92,14 @@ npm start
 
 ---
 
-## 🔐 ข้อมูลเข้าสู่ระบบสำหรับทดสอบ (Test Credentials)
+##  ข้อมูลเข้าสู่ระบบสำหรับทดสอบ (Test Credentials)
 
 - **ลูกค้า:** `John Doe` / รหัสผ่าน: `password123`
 - **ผู้ดูแลระบบ (Admin):** `sirapop` / รหัสผ่าน: `admin`
 
 ---
 
-## 📊 การเข้าดูฐานข้อมูลกราฟ (Neo4j Browser)
+##  การเข้าดูฐานข้อมูลกราฟ (Neo4j Browser)
 
 คุณสามารถดูโครงสร้าง Graph และรันคำสั่ง Cypher Query ได้ที่:
 - **URL:** `http://localhost:7474`
@@ -108,8 +108,7 @@ npm start
 
 ---
 
-## 🤝 ทีมผู้พัฒนา (Development Team)
-จัดทำโดยทีมพัฒนา **NekoCafe** เพื่อการศึกษาและพัฒนาระบบจัดการธุรกิจด้วย Graph Database
+##  ทีมผู้พัฒนา (Development Team)
+จัดทำโดยทีมพัฒนา **คนใต้รักจริง** เพื่อการศึกษาและพัฒนาระบบจัดการธุรกิจด้วย Graph Database
 
 ---
-*Love Cats, Love Coffee, Love NekoCafe* 🐾☕
